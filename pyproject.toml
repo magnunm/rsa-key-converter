@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "rsa-key-converter"
+version = "0.1.0"
+description = "Convert between RSA private and public key formats."
+authors = ["magnunm <magnusnym97@gmail.com>"]
+readme = "README.md"
+packages = [{include = "rsa_key_converter"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+cryptography = "^39.0.1"
+
+[tool.poetry.scripts]
+rsa-key-converter = "rsa_key_converter.app:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
