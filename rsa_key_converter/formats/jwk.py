@@ -3,6 +3,7 @@ import base64
 
 from cryptography.hazmat.primitives.asymmetric.rsa import (
     RSAPrivateKey,
+    RSAPublicKey,
     RSAPrivateNumbers,
     rsa_crt_iqmp,
     rsa_crt_dmp1,
@@ -10,7 +11,7 @@ from cryptography.hazmat.primitives.asymmetric.rsa import (
     RSAPublicNumbers,
 )
 
-from .format import PrivateKeyFormat
+from .format import PrivateKeyFormat, PublicKeyFormat
 
 
 class JWKPrivateKey(PrivateKeyFormat):
@@ -49,6 +50,44 @@ class JWKPrivateKey(PrivateKeyFormat):
             "p": number_to_base64_urlsafe_uint(private_numbers.p),
             "q": number_to_base64_urlsafe_uint(private_numbers.q),
             "d": number_to_base64_urlsafe_uint(private_numbers.d),
+            "kty": "RSA",
+        }
+        return json.dumps(jwk_obj)
+
+
+class JWKPublicKey(PublicKeyFormat):
+    @staticmethod
+    def name() -> str:
+        return "jwk"
+
+    @staticmethod
+    def from_string(string_repr: str) -> RSAPublicKey:
+        try:
+            jwk = json.loads(string_repr)
+        except json.JSONDecodeError as e:
+            raise ValueError("Invalid JWK format: Not valid JSON") from e
+
+        try:
+            n = number_from_base64_urlssafe_uint(jwk["n"])
+            e = number_from_base64_urlssafe_uint(jwk["e"])
+        except KeyError as e:
+            raise ValueError(
+                "Invalid JWK format for RSA public key. Numbers n and e are required."
+            ) from e
+        except ValueError as e:
+            raise ValueError(f"Invalid JWK format for RSA private key: {e}") from e
+
+        try:
+            return RSAPublicNumbers(e, n).public_key()
+        except Exception as e:
+            raise ValueError(f"Invalid RSA public key numbers: {e}")
+
+    @staticmethod
+    def to_string(key: RSAPublicKey) -> str:
+        public_numbers = key.public_numbers()
+        jwk_obj = {
+            "n": number_to_base64_urlsafe_uint(public_numbers.n),
+            "e": number_to_base64_urlsafe_uint(public_numbers.e),
             "kty": "RSA",
         }
         return json.dumps(jwk_obj)

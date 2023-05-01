@@ -10,11 +10,18 @@ d = The private exponent
 """
 from argparse import ArgumentParser
 
-from .formats import PrivateKeyFormat, PublicKeyFormat, JWKPrivateKey, PEMPrivateKey
+from .formats import (
+    PrivateKeyFormat,
+    PublicKeyFormat,
+    JWKPrivateKey,
+    JWKPublicKey,
+    PEMPrivateKey,
+    PEMPublicKey,
+)
 
 
 PRIVATE_KEY_FORMATS: list[type[PrivateKeyFormat]] = [JWKPrivateKey, PEMPrivateKey]
-PUBLIC_KEY_FORMATS: list[type[PublicKeyFormat]] = []
+PUBLIC_KEY_FORMATS: list[type[PublicKeyFormat]] = [JWKPublicKey, PEMPublicKey]
 
 
 def main():
