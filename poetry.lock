@@ -135,7 +135,19 @@ files = [
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
 ]
 
+[[package]]
+name = "pymonad"
+version = "2.4.0"
+description = "Data structures and utilities for monadic style functional programming."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "PyMonad-2.4.0-py3-none-any.whl", hash = "sha256:e78d9bf3b0712b165d4f43c29b0c1b23ed3ff11dbae1a6d61402cda7f0827d1a"},
+    {file = "PyMonad-2.4.0.tar.gz", hash = "sha256:6b9d98e40bf2e0f1cc1900309365f9ba4997f3432a1d6e71f80f41ace2890204"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6a211f6a583c8002ea33c4dfe1b5505f2a3998b6bb9f4f60261a034b8e01f250"
+content-hash = "2c3d04bc8a0045cef1b80bf230c94c8b484ade7fe0dfe0f6de36cc735809551f"
