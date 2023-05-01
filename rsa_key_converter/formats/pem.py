@@ -13,7 +13,15 @@ class PEMPrivateKey(PrivateKeyFormat):
 
     @staticmethod
     def from_string(string_repr: str) -> RSAPrivateKey:
-        ...
+        try:
+            key = serialization.load_pem_private_key(
+                string_repr.encode("utf-8"), password=None
+            )
+        except Exception as e:
+            raise ValueError(f"Could not parse key according to PEM format: {e}") from e
+        if not isinstance(key, RSAPrivateKey):
+            raise ValueError("Expected RSA key, instead got: ", type(key).__name__)
+        return key
 
     @staticmethod
     def to_string(key: RSAPrivateKey) -> str:

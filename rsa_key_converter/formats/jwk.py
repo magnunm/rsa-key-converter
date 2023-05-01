@@ -42,7 +42,16 @@ class JWKPrivateKey(PrivateKeyFormat):
 
     @staticmethod
     def to_string(key: RSAPrivateKey) -> str:
-        ...
+        private_numbers = key.private_numbers()
+        jwk_obj = {
+            "n": number_to_base64_urlsafe_uint(private_numbers.public_numbers.n),
+            "e": number_to_base64_urlsafe_uint(private_numbers.public_numbers.e),
+            "p": number_to_base64_urlsafe_uint(private_numbers.p),
+            "q": number_to_base64_urlsafe_uint(private_numbers.q),
+            "d": number_to_base64_urlsafe_uint(private_numbers.d),
+            "kty": "RSA",
+        }
+        return json.dumps(jwk_obj)
 
 
 def private_key_from_numbers(n: int, e: int, p: int, q: int, d: int) -> RSAPrivateKey:
@@ -82,3 +91,10 @@ def number_from_base64_urlssafe_uint(number_as_base64_urlsafe: str) -> int:
         raise ValueError(
             f"Expected Base64urlUInt encoded integer, got error: {e}"
         ) from e
+
+
+def number_to_base64_urlsafe_uint(number: int) -> str:
+    """Encode an integer as Base64UrlUInt."""
+    return base64.urlsafe_b64encode(
+        number.to_bytes((number.bit_length() + 7) // 8, byteorder="big", signed=False)
+    ).decode("utf-8")
