@@ -1,7 +1,6 @@
 # RSA key converter
 
-Convert between different RSA private and public key formats.
-Currently supports PEM and JWK formats.
+Convert between RSA private and public keys in PEM and JWK formats.
 
 ## Installation
 
@@ -12,6 +11,9 @@ poetry install
 poetry build
 pip install .
 ```
+
+Replace the last step with `pipx install .` for an isolated install with
+[pipx](https://github.com/pypa/pipx).
 
 ## Usage
 
