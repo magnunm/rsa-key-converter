@@ -97,12 +97,12 @@ def parse_args() -> Optional[Args]:
     formats = PRIVATE_KEY_FORMATS if args.mode == "private" else PUBLIC_KEY_FORMATS
 
     if args.input_format not in formats.keys():
-        print("Unsupported input format for mode", args.mode, ":", args.input_format)
+        print("Unsupported input format:", args.input_format)
         return
     input_format = formats[args.input_format]
 
     if args.output_format not in formats.keys():
-        print("Unsupported output format for mode", args.mode, ":", args.input_format)
+        print("Unsupported output format:", args.output_format)
         return
     output_format = formats[args.output_format]
 
