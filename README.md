@@ -1,10 +1,11 @@
 # RSA key converter
 
-Convert between RSA private and public keys in PEM and JWK formats.
+Command line tool to convert between PEM and JWK formats for RSA private and
+public keys.
 
 ## Installation
 
-In the root of this repository:
+Install using `poetry` by running:
 
 ```sh
 poetry install
@@ -21,10 +22,16 @@ Replace the last step with `pipx install .` for an isolated install with
 rsa-key-converter --help
 ```
 
-## Example
+## Examples
 
 Convert a private key in PEM format to JWK format:
 
 ```
-rsa-key-converter -i pem -o jwk '<key in pem format>'
+rsa-key-converter -i pem -o jwk '<prive key in pem format>'
+```
+
+Convert a public key in JWK format to PEM format:
+
+```
+rsa-key-converter -i jwk -o pem -m public '<public key in JWK format>'
 ```
